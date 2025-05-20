@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookings List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a href="cdashboard.html" class="c2">Back to Dashboard</a>
+    <div class="container">
+    <h1>Add Slot</h1>
+    <form id="form-group">
+        <div class="slot-row">
+            <input type="date" name="slotdate" id="slotdate">
+            <input type="time" name="slottime" id="slottime">
+        </div>
+        <button type="submit" class="c2">Create Slot</button>
+    </form>
+</div>
+
+
+    <script>
+    const form = document.querySelector('#form-group');
+    const slotDate = document.querySelector('#slotdate');
+    const slotTime = document.querySelector('#slottime');
+
+    form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        // Retrieve counsellor details from localStorage
+        const counsellorName = localStorage.getItem('counsellorName');
+        const counsellorEmail = localStorage.getItem('counsellorEmail');
+        const counsellorType = localStorage.getItem('counsellorType');
+
+        if (!counsellorName || !counsellorEmail) {
+            alert('Counsellor details missing. Please log in again.');
+            return;
+        }
+
+        const slotData = {
+            counsellorName,
+            counsellorEmail,
+            counsellorType,
+            slotDate: slotDate.value,
+            slotTime: slotTime.value
+        };
+
+        try {
+            const response = await fetch('http://localhost:3000/counsellor/addslot', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(slotData)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert(`Slot created successfully on ${slotData.slotDate} at ${slotData.slotTime}`);
+                form.reset();
+            } else {
+                alert(`Error: ${data.message}`);
+            }
+        } catch (error) {
+            alert(`Error submitting data: ${error.message}`);
+        }
+    });
+</script>
+
+</body>
+</html>

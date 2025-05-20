@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WELLNEST Feedback</title>
+    <link rel="stylesheet" href="feedback.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+          <h1>WellNest</h1>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="home.html">Home</a></li>
+          </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <form class="feedback-form">
+            <h2>Meeting Feedback</h2>
+            
+            <label for="feedbackmsg">Let us know what you think!</label>
+            <textarea name="feedback" id="feedbackmsg" placeholder="Enter your feedback"></textarea>
+            
+            <h3>Rate the Meeting Experience:</h3>
+
+            <label>How would you rate the overall quality of the meeting?</label>
+            <div class="rating">
+                <input type="radio" name="quality" value="1"> 1
+                <input type="radio" name="quality" value="2"> 2
+                <input type="radio" name="quality" value="3"> 3
+                <input type="radio" name="quality" value="4"> 4
+                <input type="radio" name="quality" value="5"> 5
+            </div>
+
+            <label>How was the audio and video clarity?</label>
+            <div class="rating">
+                <input type="radio" name="clarity" value="1"> 1
+                <input type="radio" name="clarity" value="2"> 2
+                <input type="radio" name="clarity" value="3"> 3
+                <input type="radio" name="clarity" value="4"> 4
+                <input type="radio" name="clarity" value="5"> 5
+            </div>
+
+            <label>Would you recommend this meeting platform?</label>
+            <div class="rating">
+                <input type="radio" name="recommendation" value="Yes"> Yes
+                <input type="radio" name="recommendation" value="No"> No
+            </div>
+
+            <button type="submit">Submit Feedback</button>
+        </form>
+    </main>
+
+    <footer>
+        <h3>&copy; 2025 WellNest</h3>
+    </footer>
+</body>
+</html>

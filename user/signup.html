@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WELLNEST</title>
+    <link rel="stylesheet" href="signup.css">
+    <script src="signup.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+          <h1>WellNest</h1>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="home.html">Home</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <div class="container">
+        <h2>Create Your WellNest Account</h2>
+        <form id ="form" method="post">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" id ="name" required>
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" id ="phno" maxlength="10" required>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id ="email"  required>
+            </div>
+            <div class="form-group">
+                <label>Aadhar Number</label>
+                <input type="number(10)" id ="aadhar" maxlength="12" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" required>
+            </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password"  id="cpassword" required>
+            </div>
+            <button id="submit" type="submit" class="btn">Sign Up</button>
+        </form>
+        <p class="login-link">Already have an account? <a href="login.html">Login here</a></p>
+    </div>
+
+
+
+      <footer>
+        <h3>&copy 2025 WellNest</h3>
+      </footer>
+
+</body>
+</html>

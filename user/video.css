@@ -1,0 +1,43 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  padding: 30px;
+background-color: black;
+  color: white
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+#meeting-info,
+#time-message {
+  margin-bottom: 15px;
+}
+
+#join-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #E75480;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#join-btn:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+#meet {
+  margin-top: 30px;
+  width: 80%;
+  height: 500px;
+  max-width: 1000px;
+}

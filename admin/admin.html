@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WellNest - Admin Login</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    
+    <header>
+        <h1>WellNest - Admin</h1>
+    </header>
+    <div class="login-container">
+        <input type="text" id="admin" placeholder="Enter Admin Username" class="login-input">
+        <input type="password" id="adminpasswd" placeholder="Enter Admin Password" class="login-input">
+        <button type="submit" onclick="login()" class="login-button">Log In</button>
+    </div>
+
+    <script>
+        function login() {
+            const admin = document.getElementById('admin').value;
+            const adminpasswd = document.getElementById('adminpasswd').value;
+
+            if (admin === 'admin' && adminpasswd === 'adminpasswd') {
+                window.location.href = 'admindashboard.html';
+            } else {
+                alert('Invalid Credentials');
+            }
+        }
+    </script>
+</body>
+</html>

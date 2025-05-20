@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counsellor Bookings</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <a href="cdashboard.html" class="c2">Back to Dashboard</a>
+    <div class="container">
+        <h2>Your Scheduled Sessions</h2>
+        <div id="loading">Loading bookings...</div>
+        <ul id="bookingList"></ul>
+    </div>
+     <iframe id="meetingFrame" style="width: 100%; height: 650px; border: none; display: none;"></iframe>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Get counsellor info from localStorage
+            const counsellorEmail = localStorage.getItem('counsellorEmail');
+            const counsellorName = localStorage.getItem('counsellorName');
+            const counsellorType = localStorage.getItem('counsellorType');
+
+            if (!counsellorEmail) {
+                showError('Please login first to view your bookings.');
+                return;
+            }
+
+            // Update page title with counsellor's name if available
+            if (counsellorName) {
+                document.querySelector('h2').textContent = `${counsellorName} Appointments`;
+            }
+
+            // Fetch and display bookings
+            await fetchBookings(counsellorEmail);
+        });
+
+        async function fetchBookings(counsellorEmail) {
+            try {
+                showLoading();
+
+                const response = await fetch(`http://localhost:3000/counsellor/getbookings?counsellorEmail=${counsellorEmail}`);
+
+                if (!response.ok) {
+                    throw new Error(`Server returned ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (!data.success) {
+                    throw new Error(data.message || 'Failed to fetch bookings');
+                }
+
+                if (!data.data || data.data.length === 0) {
+                    showMessage('No upcoming appointments found.');
+                    return;
+                }
+
+                displayBookings(data.data);
+            } catch (error) {
+                console.error('Fetch error:', error);
+                showError(error.message.includes('404')
+                    ? 'Server endpoint not found. Please contact support.'
+                    : error.message
+                );
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        function displayBookings(bookings) {
+            const bookingList = document.getElementById('bookingList');
+            bookingList.innerHTML = '';
+
+            bookings.forEach(booking => {
+                const bookingItem = document.createElement('li');
+                bookingItem.className = 'booking-item';
+
+               bookingItem.innerHTML = `
+    <div class="booking-card">
+        <div class="booking-header">
+            <span class="client-name">${booking.userName || 'Client'}</span>
+            <span class="booking-date">${formatDate(booking.date)}</span>
+        </div>
+        <div class="booking-details">
+            <p><strong>Time:</strong> ${booking.time || 'Not specified'}</p>
+            ${booking.userId ? `<p><strong>Client ID:</strong> ${booking.userId}</p>` : ''}
+            <p><strong>Link:</strong> 
+                <a href="#" onclick="openMeeting('${booking.meetingLink}')">Open Meeting</a>
+            </p>
+           
+        </div>
+    </div>
+    
+`;
+
+
+
+
+                bookingList.appendChild(bookingItem);
+            });
+        }
+
+
+        function openMeeting(url) {
+    const frame = document.getElementById("meetingFrame");
+    frame.src = url;
+    frame.style.display = "block"; // Show the iframe
+}
+        // Helper functions
+        function formatDate(dateString) {
+            try {
+                const date = new Date(dateString);
+                return isNaN(date) ? dateString : date.toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+            } catch {
+                return dateString;
+            }
+        }
+
+        function showLoading() {
+            document.getElementById('bookingList').innerHTML = '<li class="loading">Loading appointments...</li>';
+        }
+
+        function showMessage(message) {
+            document.getElementById('bookingList').innerHTML = `<li class="message">${message}</li>`;
+        }
+
+        function showError(message) {
+            document.getElementById('bookingList').innerHTML = `<li class="error">${message}</li>`;
+        }
+    </script>
+    <style>
+        .booking-card {
+            border: 1px solid #ccc;
+            padding: 16px;
+            margin-bottom: 16px;
+            border-radius: 8px;
+            background-color: #fdfdfd;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            max-width: 600px;
+        }
+
+        .booking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .client-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .booking-date {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .booking-details p {
+            margin: 6px 0;
+            font-size: 15px;
+            color: #444;
+        }
+    </style>
+</body>
+
+</html>
