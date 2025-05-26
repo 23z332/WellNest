@@ -5,3 +5,9 @@
 2.Choose the page you wanted to go.
 
 3.For admin, the username is "admin" and password is "adminpasswd"
+
+To install dependecies:
+npm install express cors mongoose dotenv bcrypt
+
+To run server:
+node server.js
